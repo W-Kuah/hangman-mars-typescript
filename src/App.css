@@ -188,9 +188,9 @@ section.hints {
   justify-content: stretch;
   margin-top: 2.5px;
   width: 100%;
-  /* max-width: 350px; */
+  max-width: 450px;
   margin-bottom: 25px;
-  padding-inline: 70px;
+  padding-inline: 20px;
   position: relative;
 }
 

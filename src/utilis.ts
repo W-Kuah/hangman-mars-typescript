@@ -3,10 +3,10 @@ import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'o
 
 
   // Profanity Matcher
-  const matcher = new RegExpMatcher({
+const matcher = new RegExpMatcher({
     ...englishDataset.build(),
     ...englishRecommendedTransformers,
-  });
+});
 
 
 const genNewWord = (): string => {
@@ -18,7 +18,7 @@ const genNewWord = (): string => {
 }
 
 const capitalise = (str: string): string => {
-    return String(str).charAt(0).toUpperCase() + String(val).slice(1);
+    return String(str).charAt(0).toUpperCase() + String(str).slice(1);
 }
 
 const cleanStr = (targetStr: string, wordToRm: string): string => {

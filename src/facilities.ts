@@ -1,10 +1,5 @@
+import type { Facility } from "./types";
 
-type Facility = {
-    name: string,
-    backgroundColor: string,
-    color: string,
-    message: string
-}
 
 export const facilities: Facility[] = [
     {
