@@ -28,8 +28,8 @@ function App() {
   }
 
   // State Variables
-  const [currentWord, setCurrentWord] = useState<string>(() => genNewWord());
-  const [guessedLetters, setGuessedLetters] = useState<Record<string, boolean>>(() => resetKeyboard());
+  const [currentWord, setCurrentWord] = useState<string>(():string => genNewWord());
+  const [guessedLetters, setGuessedLetters] = useState<Record<string, boolean>>(():Record<string, boolean> => resetKeyboard());
   const [currentHints, setHints] = useState<Record<string, Hint>>({
     definition: {
       str: '',
