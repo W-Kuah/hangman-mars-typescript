@@ -45,10 +45,10 @@ function App() {
   const [lives, setLives] = useState<number>(facilities.length);
 
   // Derived Values
-  const isLost = lives === 0;
-  const isWon = calculateWin();
-  const isGameOver = isLost || isWon
-  const facilityLostIdx = facilities.length - (lives + 1);
+  const isLost: boolean = lives === 0;
+  const isWon: boolean = calculateWin();
+  const isGameOver: boolean = isLost || isWon
+  const facilityLostIdx: number = facilities.length - (lives + 1);
 
 
   // Functions
