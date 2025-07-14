@@ -9,7 +9,7 @@ import clsx from 'clsx';
 function App() {
 
   // Static Values
-  const keyboard = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("");
+  const keyboard: string[] = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("");
 
 
   // Initial Functions
@@ -176,8 +176,8 @@ function App() {
   ));
 
   useEffect(() => {
-    const fetchInit = async () => {
-      const result = await fetchWordData(currentWord);
+    const fetchInit = async ():Promise<void> => {
+      const result:string[] | undefined = await fetchWordData(currentWord);
       let definition = '';
       let example = '';
       if (result) {
