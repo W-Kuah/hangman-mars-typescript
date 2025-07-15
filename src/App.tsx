@@ -1,10 +1,16 @@
-import { useEffect, useState, type JSX } from 'react'
+import { useEffect, useState, } from 'react'
 import './App.css'
 import { facilities } from './facilities'
-import { genNewWord, capitalise, cleanStr } from './utilis'
-import type { Facility, Hint } from './types';
+import { genNewWord, cleanStr } from './utilis'
+import type { Hint } from './types';
 import axios from 'axios';
-import clsx from 'clsx';
+import AriaLiveStatus from './components/AriaLiveStatus';
+import WordLetters from './components/WordLetters';
+import Header from './components/Header';
+import FacilityChips from './components/FacilityChips';
+import GameStatus from './components/GameStatus';
+import Keyboard from './components/Keyboard';
+import Hints from './components/Hints';
 
 function App() {
 
@@ -20,6 +26,7 @@ function App() {
     });
     return newKeyboardState;
   }
+
   const calculateWin = (): boolean => {
     for (let i = 0; i < currentWord.length; i++) {
       if (!guessedLetters[currentWord[i]]) return false;
@@ -47,8 +54,7 @@ function App() {
   // Derived Values
   const isLost: boolean = lives === 0;
   const isWon: boolean = calculateWin();
-  const isGameOver: boolean = isLost || isWon
-  const facilityLostIdx: number = facilities.length - (lives + 1);
+  const isGameOver: boolean = isLost || isWon;
 
 
   // Functions
@@ -121,60 +127,7 @@ function App() {
   }
 
 
-  // Elements
-  const facilitiesElem:JSX.Element[] = facilities.map((facility:Facility, idx:number) => {
-    const styles = {
-      backgroundColor: facility.backgroundColor,
-      color: facility.color
-    }
-    return (
-      <span 
-        key={facility.name} 
-        className={clsx({chip:true, lost:idx < facilities.length - lives})}
-        style={styles}>{facility.name}
-      </span>
-    )
-  });
-
-  const letterElems:JSX.Element[] = currentWord.split("").map((letter:string, idx:number) => (
-    <span 
-      key={idx}
-      className={clsx(
-            isLost && !guessedLetters[letter] && "missed-letter"
-        )}
-    >{(guessedLetters[letter] || isGameOver) && letter}</span>
-  ));
-
-  const  keyboardElems:JSX.Element[] = keyboard.map((letter:string) => (
-    <button 
-      className={clsx({
-        correct: guessedLetters[letter] &&  currentWord.includes(letter),
-        wrong: guessedLetters[letter] &&  !currentWord.includes(letter),
-      })}
-      key={letter} 
-      onClick={() => addGuessedLetter(letter)}
-      disabled={isGameOver}
-      aria-disabled={guessedLetters[letter]}
-      aria-label={`Letter ${letter}`}
-    >
-      {letter}
-    </button>
-  ));
-
-  const hintElems:(JSX.Element | null) [] = Object.keys(currentHints).map((hintKey: string) => (
-    currentHints[hintKey].str !== '' ? <div key={hintKey}>
-      {!currentHints[hintKey].isShown ? <button onClick={() => handleHint(hintKey)}>Show</button> : null}
-      <p>
-        <b>{capitalise(hintKey)}</b>
-        {!currentHints[hintKey].isShown && (` (-${currentHints[hintKey].cost})`)}
-        : {
-          currentHints[hintKey].isShown ? 
-          currentHints[hintKey].str : '???'
-        }
-      </p>
-    </div> : null
-  ));
-
+  // Get Hints
   useEffect(() => {
     const fetchInit = async ():Promise<void> => {
       const result:string[] | undefined = await fetchWordData(currentWord);
@@ -203,65 +156,47 @@ function App() {
 
   return (
     <main>
-        <header>
-          <h1>MARS Systems Reboot</h1>
-          <p>Guess the code to restore life-support systems using the key pad. Previous codes: <b>LIZARD</b>, <b>VAULTING</b> and <b>PASSWORD</b>. You have <u>9 chances!</u> Use the hints at high cost to the facilities' integrity.</p>
-        </header>
-        <section 
-          aria-live="polite" 
-          role="status" 
-          className={clsx('game-status', isWon && 'won', isLost && 'lost', (lives < 9 && !isGameOver) && 'damage')}
-        >
-          {isGameOver ? 
-            (
-              isWon ? (
-                <>
-                  <h2>🚀 Life-Support Rebooting 🚀</h2>
-                  <p> You have saved the colony from certain doom.</p>
-                </>
-              ) : (
-                <>
-                  <h2>⚫ Life-Support Failure ⚫</h2>
-                  <p> The console makes a winding down hum followed by the LED lights dimming to black.</p>
-                </>
-              )
-            ) : (
-              <p>{lives === 9 ? null : facilities[facilityLostIdx].message}</p>
-            )
-          }
-        </section>
-        
-        <section className="facility-chips">
-          {facilitiesElem}
-        </section>
-        <section className="word">
-          {letterElems}
-        </section>
+      <Header/>
+      <GameStatus
+        isWon={isWon}
+        isLost={isLost}
+        isGameOver={isGameOver}
+        lives={lives}
+      />
 
-        <section 
-          className="sr-only" 
-          aria-live="polite" 
-          role="status"
-        >
-          <p>
-            {}
-          </p>
-          <p>Current word:{currentWord.split("").map(letter => guessedLetters[letter] ? letter + "." :"blank.")}.join(" ")</p>
-        </section>
-        <section className="keyboard">
-          {keyboardElems}
-        </section>
-        
-        {isGameOver ? 
-          <button className="new-game" onClick={handleReset}>New Game</button> 
-        :
-          (currentHints.definition.str !== '' && <section className="hints">
-            <h2>Hints:</h2>
-            <div>
-              {hintElems}
-            </div>
-          </section>)  
-        }
+      <FacilityChips
+        lives={lives}
+      />
+  
+      <WordLetters
+        currentWord={currentWord}
+        isLost={isLost}
+        guessedLetters={guessedLetters}
+        isGameOver={isGameOver}
+      />
+
+      <AriaLiveStatus
+        currentWord={currentWord}
+        guessedLetters={guessedLetters}
+      />
+
+      <Keyboard
+        keyboard={keyboard}
+        guessedLetters={guessedLetters}
+        currentWord={currentWord}
+        addGuessedLetter={addGuessedLetter}
+        isGameOver={isGameOver}
+      />
+      
+      {isGameOver ? 
+        <button className="new-game" onClick={handleReset}>New Game</button> 
+      :
+        currentHints.definition.str !== '' && 
+        <Hints
+          currentHints={currentHints}
+          handleHint={handleHint}
+        />
+      }
       </main>
   )
 }
