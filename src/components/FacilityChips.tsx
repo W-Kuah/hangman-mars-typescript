@@ -6,7 +6,7 @@ import { facilities } from '../facilities'
 export default function FacilityChips(props: { lives: number; }):JSX.Element  {
     const { lives } = props
     const facilitiesElem:JSX.Element[] = facilities.map((facility:Facility, idx:number):JSX.Element => {
-    const styles = {
+    const styles:Omit<Facility, 'name' | 'message'> = {
       backgroundColor: facility.backgroundColor,
       color: facility.color
     }
