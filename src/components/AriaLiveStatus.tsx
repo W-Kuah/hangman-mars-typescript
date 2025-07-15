@@ -1,6 +1,11 @@
 import type { JSX } from "react";
 
-export default function AriaLiveStatus(props: { currentWord: string; guessedLetters: Record<string, boolean>; }):JSX.Element {
+type AriaLiveStatusProps = {
+    currentWord: string,
+    guessedLetters: Record<string, boolean>,
+}
+
+export default function AriaLiveStatus(props: AriaLiveStatusProps):JSX.Element {
     const {currentWord, guessedLetters} = props;
     return (
         <section 

@@ -1,7 +1,15 @@
 import clsx from "clsx";
 import type { JSX } from "react";
 
-export default function Keyboard(props: { keyboard: string[]; guessedLetters: Record<string, boolean>; currentWord: string; addGuessedLetter: (letter: string) => void; isGameOver: boolean; }):JSX.Element  {
+type KeyboardProps = { 
+    keyboard: string[],
+    guessedLetters: Record<string, boolean>,
+    currentWord: string,
+    addGuessedLetter: (letter: string) => void,
+    isGameOver: boolean
+}
+
+export default function Keyboard(props: KeyboardProps):JSX.Element  {
     const {keyboard, guessedLetters, currentWord, addGuessedLetter, isGameOver} = props;
     return (
        <section className="keyboard">

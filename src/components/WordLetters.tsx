@@ -1,7 +1,14 @@
 import clsx from "clsx";
 import type { JSX } from "react"
 
-export default function WordLetters(props: { currentWord: string; isLost: boolean; guessedLetters: Record<string, boolean>; isGameOver: boolean; }):JSX.Element  {
+type WordLettersProps = {
+    currentWord: string,
+    isLost: boolean,
+    guessedLetters: Record<string, boolean>,
+    isGameOver: boolean
+}
+
+export default function WordLetters(props: WordLettersProps):JSX.Element  {
     const {currentWord, isLost, guessedLetters, isGameOver} = props;
     
     return (

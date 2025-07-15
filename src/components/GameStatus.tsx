@@ -2,8 +2,14 @@ import clsx from "clsx";
 import type { JSX } from "react";
 import { facilities } from "../facilities";
 
+type GameStatusProps = {
+    isWon: boolean,
+    isLost: boolean,
+    isGameOver: boolean,
+    lives: number
+}
 
-export default function GameStatus(props: { isWon: boolean; isLost: boolean; isGameOver: boolean; lives: number; }):JSX.Element  {
+export default function GameStatus(props: GameStatusProps):JSX.Element  {
     const { isWon, isLost, isGameOver, lives} = props;
 
     //  Derived Values

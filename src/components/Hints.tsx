@@ -2,7 +2,12 @@ import type { JSX } from "react";
 import { capitalise } from "../utilis";
 import type { Hint } from "../types";
 
-export default function Hints(props: { currentHints: Record<string, Hint>; handleHint: (str:string) => void; }):JSX.Element  {
+
+type HintsProps = {
+    currentHints: Record<string, Hint>,
+    handleHint: (str:string) => void; 
+}
+export default function Hints(props: HintsProps):JSX.Element  {
     const { currentHints, handleHint } = props;
     return (
        <section className="hints">
