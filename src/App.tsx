@@ -21,7 +21,7 @@ function App() {
   // Initial Functions
   const resetKeyboard = (): Record<string, boolean> => {
     const newKeyboardState: Record<string, boolean> = {};
-    keyboard.forEach(letter => {
+    keyboard.forEach((letter:string):void => {
       newKeyboardState[letter] = false;
     });
     return newKeyboardState;
@@ -128,7 +128,7 @@ function App() {
 
 
   // Get Hints
-  useEffect(() => {
+  useEffect(():void => {
     const fetchInit = async ():Promise<void> => {
       const result:string[] | undefined = await fetchWordData(currentWord);
       let definition = '';

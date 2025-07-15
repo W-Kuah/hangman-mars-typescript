@@ -13,7 +13,7 @@ export default function WordLetters(props: WordLettersProps):JSX.Element  {
     
     return (
         <section className="word">
-            {currentWord.split("").map((letter:string, idx:number) => (
+            {currentWord.split("").map((letter:string, idx:number):JSX.Element => (
                 <span 
                 key={idx}
                 className={clsx(

@@ -13,7 +13,7 @@ export default function Keyboard(props: KeyboardProps):JSX.Element  {
     const {keyboard, guessedLetters, currentWord, addGuessedLetter, isGameOver} = props;
     return (
        <section className="keyboard">
-        {keyboard.map((letter:string) => (
+        {keyboard.map((letter:string):JSX.Element => (
             <button 
               className={clsx({
                 correct: guessedLetters[letter] &&  currentWord.includes(letter),

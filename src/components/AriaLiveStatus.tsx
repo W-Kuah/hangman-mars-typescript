@@ -13,7 +13,7 @@ export default function AriaLiveStatus(props: AriaLiveStatusProps):JSX.Element {
           aria-live="polite" 
           role="status"
         >
-          <p>Current word:{currentWord.split("").map((letter:string) => guessedLetters[letter] ? letter + "." :"blank.")}.join(" ")</p>
+          <p>Current word:{currentWord.split("").map((letter:string):string => guessedLetters[letter] ? letter + "." :"blank.")}.join(" ")</p>
         </section>
     )
 }

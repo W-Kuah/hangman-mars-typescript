@@ -13,7 +13,7 @@ export default function Hints(props: HintsProps):JSX.Element  {
        <section className="hints">
           <h2>Hints:</h2>
           <div>
-            {Object.keys((currentHints)).map((hintKey: string) => (
+            {Object.keys((currentHints)).map((hintKey: string):JSX.Element | null => (
                 currentHints[hintKey].str !== '' ? <div key={hintKey}>
                 {!currentHints[hintKey].isShown ? <button onClick={() => handleHint(hintKey)}>Show</button> : null}
                 <p>
